@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List Item</title>
+
+</head>
+
+<body>
+    <h1>ShoppingList</h1>
+
+    <p>Current version: <span id="version"></span></p>
+    <div id="messages"></div>
+    <ul></ul>
+    <script>
+        const electron = require('electron');
+        const {
+            app
+        } = electron;
+        const {
+            ipcRenderer
+        } = electron;
+        const ul = document.querySelector('ul');
+
+        // Add Item
+        ipcRenderer.on('item:add', function(e, item) {
+            const li = document.createElement('li');
+            const itemText = document.createTextNode(item);
+            li.appendChild(itemText);
+            ul.appendChild(li);
+        })
+
+        // Clear Item 
+        ipcRenderer.on('item:clear', function() {
+            ul.innerHTML = '';
+        })
+
+        // Remove Item 
+        ul.addEventListener('dblclick', removeItem);
+
+        function removeItem(e) {
+            event.target.remove();
+            if (ul.children.length == 0) {
+                ul.className = '';
+            }
+        }
+
+        // Display the current version
+        ipcRenderer.on('version', function(e, version) {
+            document.getElementById('version').innerText = version;
+        })
+
+        // Listen for messages
+        ipcRenderer.on('message', function(e, msg) {
+            console.log(msg);
+            var container = document.getElementById('messages');
+            var message = document.createElement('div');
+            message.innerHTML = msg;
+            container.appendChild(message);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/css/style.css">
+    <title>My first Electron | Add Shopping List Item</title>
+</head>
+
+<body>
+    <h1>Add Shopping List Item</h1>
+    <form>
+        <div>
+            <label>enter Item</label>
+            <input type="text" id="item" autofocus>
+        </div>
+        <button type="submit">add Item</button>
+    </form>
+
+    <script>
+        const electron = require('electron');
+        const {
+            ipcRenderer
+        } = electron;
+        const form = document.querySelector('form');
+        form.addEventListener('submit', submitForm);
+
+        function submitForm(e) {
+            e.preventDefault();
+            const item = document.querySelector('#item').value;
+            if (item != "" && item != null) {
+                ipcRenderer.send('item:add', item);
+                console.log(item);
+            } else console.log("null");
+        }
+    </script>
+    <script src="src/js/app.js"></script>
+</body>
+
+</html>
