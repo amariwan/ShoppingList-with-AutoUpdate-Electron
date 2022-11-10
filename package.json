@@ -82,7 +82,7 @@
         "PromiseRejectionHandledWarning"
     ],
     "devDependencies": {
-        "electron": "^18.2.3",
+        "electron": "^18.3.7",
         "electron-builder": "^22.6.1",
         "@electron-forge/cli": "^6.0.0-beta.51",
         "@electron-forge/maker-deb": "^6.0.0-beta.51",
